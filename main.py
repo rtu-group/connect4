@@ -144,4 +144,36 @@ def initialize_game():
                     pygame.time.wait(3000)
 
 # start the game
-initialize_game()
+# initialize_game()
+
+# New functions for UI
+def draw_menu():
+    screen.fill(BLACK)
+    font = pygame.font.SysFont(None, FONT_SIZE)
+    play_label = font.render("Play", 1, RED)
+    quit_label = font.render("Quit", 1, YELLOW)
+    
+    pygame.draw.rect(screen, RED, (WIDTH // 4 - 50, HEIGHT // 2 - 25, 100, 50), 2)
+    pygame.draw.rect(screen, YELLOW, (WIDTH * 3 // 4 - 50, HEIGHT // 2 - 25, 100, 50), 2)
+    
+    screen.blit(play_label, (WIDTH // 4 - 30, HEIGHT // 2 - 20))
+    screen.blit(quit_label, (WIDTH * 3 // 4 - 30, HEIGHT // 2 - 20))
+    pygame.display.update()
+
+def menu_loop():
+    while True:
+        draw_menu()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                x, y = pygame.mouse.get_pos()
+                if WIDTH // 4 - 50 < x < WIDTH // 4 + 50 and HEIGHT // 2 - 25 < y < HEIGHT // 2 + 25:
+                    initialize_game()
+                elif WIDTH * 3 // 4 - 50 < x < WIDTH * 3 // 4 + 50 and HEIGHT // 2 - 25 < y < HEIGHT // 2 + 25:
+                    pygame.quit()
+                    sys.exit()
+
+# start the game
+menu_loop()
